@@ -2,6 +2,7 @@ FROM alpine:3.12
 
 ARG KUBECTL_VERSION="1.17.7"
 
+RUN apk add --no-cache bash
 RUN apk add py-pip curl wget git openssh
 RUN pip install awscli
 RUN curl -L -o /usr/bin/kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.7/2020-07-08/bin/linux/amd64/kubectl
