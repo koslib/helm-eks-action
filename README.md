@@ -39,6 +39,15 @@ jobs:
           command: helm upgrade <release name> --install --wait <chart> -f <path to values.yaml>
 ```
 
+# Secrets
+
+* `KUBE_CONFIG_DATA`
+Your kube config file in base64-encrypted form. You can do that with
+
+```
+cat $HOME/.kube/config | base64
+```
+
 # Contributions
 
 Pull requests, issues or feedback of any kind are more than welcome by anyone!
