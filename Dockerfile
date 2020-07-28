@@ -13,9 +13,8 @@ RUN chmod +x /usr/bin/aws-iam-authenticator
 RUN wget https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm 
 RUN chmod +x /usr/local/bin/helm
 
-RUN mkdir -p ~/.helm/plugins
+RUN helm init --client-only
 RUN helm plugin install https://github.com/zendesk/helm-secrets
-RUN ls -all ~/.helm/plugins
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]:
