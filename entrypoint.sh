@@ -3,7 +3,8 @@
 echo ${KUBE_CONFIG_DATA} | base64 -d > kubeconfig
 export KUBECONFIG=kubeconfig
 
-helm plugin install https://github.com/zendesk/helm-secrets || :
+echo "(debug) listing helm plugins"
+ls -all ~/.helm/plugins
 
 result="$($1)"
 
