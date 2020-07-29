@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Jberlinsky AWS Credentials
+      - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -41,12 +41,18 @@ jobs:
 
 # Secrets
 
+Create a GitHub Secret for each of the following values:
+
 * `KUBE_CONFIG_DATA`
 Your kube config file in base64-encrypted form. You can do that with
 
 ```
 cat $HOME/.kube/config | base64
 ```
+
+* `AWS_ACCESS_KEY_ID`
+
+* `AWS_SECRET_ACCESS_KEY`
 
 # Contributions
 
