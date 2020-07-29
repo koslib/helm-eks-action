@@ -1,6 +1,8 @@
 # helm-eks-action
 Github Action for  executing Helm commands on EKS (using aws-iam-authenticator).
 
+The Helm version installed is Helm3, and also [helm-secrets](https://github.com/zendesk/helm-secrets) plugin is installed by default. If enough popular demand arises in the future, I'll make those configurable. 
+
 This action was inspired by [kubernetes-action](https://github.com/Jberlinsky/kubernetes-action).
 
 # Instructions
