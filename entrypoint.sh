@@ -4,6 +4,7 @@ echo ${KUBE_CONFIG_DATA} | base64 -d > kubeconfig
 export KUBECONFIG=kubeconfig
 
 helm plugin install https://github.com/zendesk/helm-secrets
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
 result="$($1)"
 
