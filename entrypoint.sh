@@ -4,7 +4,7 @@ echo ${KUBE_CONFIG_DATA} | base64 -d > kubeconfig
 export KUBECONFIG=kubeconfig
 # export HELM_PLUGINS=/usr/local/.helm/plugins/
 
-$1
+exec "$@"
 # result="$($1)"
 
 # status=$?
