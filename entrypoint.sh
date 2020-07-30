@@ -2,7 +2,7 @@
 
 echo ${KUBE_CONFIG_DATA} | base64 -d > kubeconfig
 export KUBECONFIG=kubeconfig
-export HELM_PLUGINS=/usr/local/helm/plugins
+export HELM_PLUGINS=~/.helm/plugins
 
 result="$($1)"
 
