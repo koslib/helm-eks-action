@@ -3,7 +3,7 @@
 echo ${KUBE_CONFIG_DATA} | base64 -d > kubeconfig
 export KUBECONFIG=kubeconfig
 
-exec "$@"
+exec "$1"
 result="$($1)"
 
 status=$?
