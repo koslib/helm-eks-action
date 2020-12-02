@@ -34,7 +34,7 @@ jobs:
           aws-region: us-east-1
 
       - name: helm deploy
-        uses: koslibpro/helm-eks-action@master
+        uses: koslib/helm-eks-action@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
