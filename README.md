@@ -41,6 +41,25 @@ jobs:
           command: helm upgrade <release name> --install --wait <chart> -f <path to values.yaml>
 ```
 
+# Response
+
+Use the output of your command in later steps
+
+```yaml
+    steps:
+      - name: Get URL
+        id: url
+        uses: koslib/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          command: kubectl get svc my_svc -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
+
+      - name: Print Response
+        run: echo "Response was ${{ steps.url.outputs.response }}"
+
+```
+
 # Secrets
 
 Create a GitHub Secret for each of the following values:
