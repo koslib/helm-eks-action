@@ -1,10 +1,8 @@
-FROM alpine:3.12
+FROM python:3.7-alpine
 
 ARG KUBECTL_VERSION="1.17.7"
 
-RUN apk add py-pip curl wget ca-certificates git bash jq
-RUN apk update && apk add gcc
-RUN pip install awscli
+RUN pip3 install --upgrade awscli
 RUN curl -L -o /usr/bin/kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.7/2020-07-08/bin/linux/amd64/kubectl
 RUN chmod +x /usr/bin/kubectl
 
