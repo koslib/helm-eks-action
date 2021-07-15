@@ -1,15 +1,15 @@
-name: "Github Action for Helm on EKS (with aws-iam-authenticator)"
-description: "Authenticates on EKS clusters using aws-iam-authenticator and executes Helm commands. Can also be used with kubectl commands."
+name: "Github Action for Helm and Helmfile on EKS (with aws-iam-authenticator)"
+description: "Authenticates on EKS clusters using aws-iam-authenticator and executes Helm (or Helmfile) commands. Can also be used with kubectl commands."
 branding:
   icon: 'anchor'  
   color: 'blue'
 inputs:
   command:
-    description: "Your command (kubectl or helm)"
+    description: "Your command (kubectl, helm or helmfile)"
     required: true
 outputs:
   result:
-    description: "Output returned by your Helm or kubectl command"
+    description: "Output returned by your Helm, Helmfile or kubectl command"
 runs:
   using: "docker"
   image: "Dockerfile"

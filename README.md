@@ -1,7 +1,8 @@
 # helm-eks-action
-Github Action for  executing Helm commands on EKS (using aws-iam-authenticator).
+Github Action for  executing [Helm](https://github.com/helm/helm) (or [Helmfile](https://github.com/roboll/helmfile)) commands on EKS (using aws-iam-authenticator).
 
-The Helm version installed is Helm3.
+The Helm version installed is Helm3. 
+The Helmfile version 0.138.7.
 
 This action was inspired by [kubernetes-action](https://github.com/Jberlinsky/kubernetes-action).
 
@@ -39,6 +40,13 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           command: helm upgrade <release name> --install --wait <chart> -f <path to values.yaml>
+
+      - name: helmfile sync
+        uses: koslib/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          command: helmfile sync helmfile.yaml
 ```
 
 # Response
