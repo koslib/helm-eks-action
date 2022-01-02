@@ -9,6 +9,20 @@ This action was inspired by [kubernetes-action](https://github.com/Jberlinsky/ku
 
 This Github Action was created with EKS in mind, therefore the following example refers to it.
 
+## Input variables
+
+1. `plugins`: you can specify a list of Helm plugins you'd like to install and use later on in your command. eg. helm-secrets or helm-diff. This action does not support only a specific list of Helm plugins, rather any Helm plugin as long as you supply its URL. You can use the following [example](#example) as a reference.
+2. `command`: your kubectl/helm command. This supports multiline as per the Github Actions workflow syntax.
+
+example for multiline:
+```yaml
+...
+with:
+  command: |
+    helm upgrade --install my-release chart/repo
+    kubectl get pods
+```
+
 ## Example
 
 ```yaml
@@ -38,6 +52,7 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
+          plugins: "https://github.com/jkroepke/helm-secrets" # optional
           command: helm upgrade <release name> --install --wait <chart> -f <path to values.yaml>
 ```
 
