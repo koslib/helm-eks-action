@@ -7,6 +7,9 @@ inputs:
   command:
     description: "Your command (kubectl or helm)"
     required: true
+  plugins:
+    description: "Comma-separated URLs for the Helm Plugins you need installed"
+    required: false
 outputs:
   result:
     description: "Output returned by your Helm or kubectl command"
