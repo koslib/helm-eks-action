@@ -1,4 +1,4 @@
-name: "Github Action for Helm on EKS (with aws-iam-authenticator)"
+name: "Helm on EKS (with aws-iam-authenticator)"
 description: "Authenticates on EKS clusters using aws-iam-authenticator and executes Helm commands. Can also be used with kubectl commands."
 branding:
   icon: 'anchor'  
