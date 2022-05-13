@@ -17,7 +17,7 @@ then
     done
 fi
 
-if [[ -z "${CONTEXT}" ]]; then
+if [[ ! -z "${CONTEXT}" ]]; then
     kubectl config use-context ${CONTEXT}
 fi
 
