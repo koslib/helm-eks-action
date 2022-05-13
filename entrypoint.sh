@@ -17,6 +17,11 @@ then
     done
 fi
 
+if [[ -z "${CONTEXT}" ]]; then
+    kubectl config use-context ${CONTEXT}
+fi
+
+
 echo "running entrypoint command(s)"
 
 response=$(sh -c " $INPUT_COMMAND")
