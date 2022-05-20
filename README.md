@@ -93,3 +93,7 @@ cat $HOME/.kube/config | base64
 # Contributions
 
 Pull requests, issues or feedback of any kind are more than welcome by anyone!
+
+If this action has helped you in any way and enjoyed it, feel free to submit feedback through [issues](https://github.com/koslib/helm-eks-action/issues) or buy me a coffee!
+
+<a href="https://www.buymeacoffee.com/koslib" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
