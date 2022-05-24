@@ -10,11 +10,12 @@ inputs:
   plugins:
     description: "Comma-separated URLs for the Helm Plugins you need installed"
     required: false
+  context:
+    description: "Name of context from your KUBE_CONFIG_DATA, if not the default"
+    required: false
 outputs:
   result:
     description: "Output returned by your Helm or kubectl command"
 runs:
   using: "docker"
   image: "Dockerfile"
-  args:
-    - ${{ inputs.command }}

@@ -17,8 +17,8 @@ then
     done
 fi
 
-if [[ ! -z "${CONTEXT}" ]]; then
-    kubectl config use-context ${CONTEXT}
+if [[ ! -z "${INPUT_CONTEXT}" ]]; then
+    kubectl config use-context ${INPUT_CONTEXT}
 fi
 
 
