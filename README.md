@@ -48,11 +48,12 @@ jobs:
           role-to-assume: arn:aws:iam::<your account id>:role/github-actions
           role-session-name: ci-run-${{ github.run_id }}
           aws-region: ${{ env.AWS_REGION }}
+      
+      - name: kubeconfing
+        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
 
       - name: helm deploy
         uses: koslib/helm-eks-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           plugins: "https://github.com/jkroepke/helm-secrets" # optional
           command: helm secrets upgrade <release name> --install --wait <chart> -f <path to values.yaml>
@@ -77,6 +78,11 @@ Use the output of your command in later steps
 
 ```
 
+# Accessing your cluster
+
+> Breaking change from v2.x and onwards
+
+From version v2.x and onwards, this action does not require any kube-config data set as a secret to connect to the repo. Instead, by authenticating with your AWS account, it automatically generates a kube-config file for your cluster which is then used to execute any `helm` commands.
 
 
 # Contributions
