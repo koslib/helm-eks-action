@@ -37,15 +37,17 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      AWS_REGION: us-east-1
     steps:
       - uses: actions/checkout@v2
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::<your account id>:role/github-actions
+          role-session-name: ci-run-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: helm deploy
         uses: koslib/helm-eks-action@master
@@ -53,7 +55,7 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           plugins: "https://github.com/jkroepke/helm-secrets" # optional
-          command: helm upgrade <release name> --install --wait <chart> -f <path to values.yaml>
+          command: helm secrets upgrade <release name> --install --wait <chart> -f <path to values.yaml>
 ```
 
 # Response
@@ -75,20 +77,7 @@ Use the output of your command in later steps
 
 ```
 
-# Secrets
 
-Create a GitHub Secret for each of the following values:
-
-* `KUBE_CONFIG_DATA`
-Your kube config file in base64-encrypted form. You can do that with
-
-```
-cat $HOME/.kube/config | base64
-```
-
-* `AWS_ACCESS_KEY_ID`
-
-* `AWS_SECRET_ACCESS_KEY`
 
 # Contributions
 
