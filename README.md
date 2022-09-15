@@ -37,23 +37,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      AWS_REGION: us-east-1
+      CLUSTER_NAME: my-staging
     steps:
       - uses: actions/checkout@v2
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::<your account id>:role/github-actions
+          role-session-name: ci-run-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
+      
+      - name: kubeconfing
+        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
 
       - name: helm deploy
         uses: koslib/helm-eks-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           plugins: "https://github.com/jkroepke/helm-secrets" # optional
-          command: helm upgrade <release name> --install --wait <chart> -f <path to values.yaml>
+          command: helm secrets upgrade <release name> --install --wait <chart> -f <path to values.yaml>
 ```
 
 # Response
@@ -75,20 +79,12 @@ Use the output of your command in later steps
 
 ```
 
-# Secrets
+# Accessing your cluster
 
-Create a GitHub Secret for each of the following values:
+> Breaking change from v2.x and onwards
 
-* `KUBE_CONFIG_DATA`
-Your kube config file in base64-encrypted form. You can do that with
+From version v2.x and onwards, this action does not require any kube-config data set as a secret to connect to the repo. Instead, by authenticating with your AWS account, it automatically generates a kube-config file for your cluster which is then used to execute any `helm` commands.
 
-```
-cat $HOME/.kube/config | base64
-```
-
-* `AWS_ACCESS_KEY_ID`
-
-* `AWS_SECRET_ACCESS_KEY`
 
 # Contributions
 
