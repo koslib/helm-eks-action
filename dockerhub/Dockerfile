@@ -1,8 +1,12 @@
+FROM mozilla/sops:v3.6.0-alpine as sops
+
 FROM alpine:3.13
 
 ARG AWSCLI_VERSION="1.23.13"
 ARG HELM_VERSION="3.8.0"
 ARG KUBECTL_VERSION="1.24.0"
+
+COPY --from=sops /usr/local/bin/sops /usr/bin/sops
 
 RUN apk add py-pip curl wget ca-certificates git bash jq gcc alpine-sdk
 RUN pip install "awscli==${AWSCLI_VERSION}"
