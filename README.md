@@ -69,8 +69,6 @@ Use the output of your command in later steps
       - name: Get URL
         id: url
         uses: koslib/helm-eks-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           command: kubectl get svc my_svc -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
 
