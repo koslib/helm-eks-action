@@ -39,6 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: us-east-1
+      CLUSTER_NAME: my-staging
     steps:
       - uses: actions/checkout@v2
 
