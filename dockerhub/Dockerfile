@@ -2,9 +2,9 @@ FROM mozilla/sops:v3.6.0-alpine as sops
 
 FROM alpine:3.13
 
-ARG AWSCLI_VERSION="1.23.13"
-ARG HELM_VERSION="3.8.0"
-ARG KUBECTL_VERSION="1.24.0"
+ARG AWSCLI_VERSION="1.24.0"
+ARG HELM_VERSION="3.10.1"
+ARG KUBECTL_VERSION="1.25.91"
 
 COPY --from=sops /usr/local/bin/sops /usr/bin/sops
 
