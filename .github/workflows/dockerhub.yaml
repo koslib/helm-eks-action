@@ -24,6 +24,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          file: dockerhub/Dockerfile
           context: "{{defaultContext}}:dockerhub"
           tags: koslib/ga-helm-eks:latest, koslib/ga-helm-eks:${{ github.event.inputs.tag }}
