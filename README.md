@@ -81,7 +81,7 @@ Use the output of your command in later steps
 
 ```
 
-# Main dependency version
+# Main dependencies version table
 
 The latest version of this action uses the following dependencies versions:
 
