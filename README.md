@@ -81,11 +81,13 @@ Use the output of your command in later steps
 
 ```
 
+
+
 # Accessing your cluster
 
-> Breaking change from v2.x and onwards
+This action does not require any kube-config data set as a secret to connect to the repo. Instead, by authenticating with your AWS account, it automatically generates a kube-config file for your cluster which is then used to execute any `helm` commands. 
 
-From version v2.x and onwards, this action does not require any kube-config data set as a secret to connect to the repo. Instead, by authenticating with your AWS account, it automatically generates a kube-config file for your cluster which is then used to execute any `helm` commands.
+However if you find this configuration option complicated, you can still supply `KUBE_CONFIG_DATA` as a repository secret, however this is not endorsed by this repository.
 
 
 # Contributions
