@@ -64,7 +64,7 @@ jobs:
           command: helm secrets upgrade <release name> --install --wait <chart> -f <path to values.yaml>
 ```
 
-# Response
+## Response
 
 Use the output of your command in later steps
 
@@ -81,14 +81,26 @@ Use the output of your command in later steps
 
 ```
 
+# Main dependency version
+
+The latest version of this action uses the following dependencies versions:
+
+| Package      | Version |
+| ----------- | ----------- |
+| awscli      | 1.24.0  |
+| helm   | 3.10.1        |
+| kubectl   | 1.25.91        |
+
+It is very much possible that an update came out and I did not update the action on time. In this please, feel free to [send me a PR](#contributing) and I'll review it as soon as possible.
+
 # Accessing your cluster
 
-> Breaking change from v2.x and onwards
+This action does not require any kube-config data set as a secret to connect to the repo. Instead, by authenticating with your AWS account, it automatically generates a kube-config file for your cluster which is then used to execute any `helm` commands. 
 
-From version v2.x and onwards, this action does not require any kube-config data set as a secret to connect to the repo. Instead, by authenticating with your AWS account, it automatically generates a kube-config file for your cluster which is then used to execute any `helm` commands.
+However if you find this configuration option complicated, you can still supply `KUBE_CONFIG_DATA` as a repository secret, however this is not endorsed by this repository.
 
 
-# Contributions
+# Contributing
 
 Pull requests, issues or feedback of any kind are more than welcome by anyone!
 
