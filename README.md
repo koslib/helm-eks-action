@@ -64,7 +64,7 @@ jobs:
           command: helm secrets upgrade <release name> --install --wait <chart> -f <path to values.yaml>
 ```
 
-# Response
+## Response
 
 Use the output of your command in later steps
 
