@@ -81,7 +81,17 @@ Use the output of your command in later steps
 
 ```
 
+# Main dependency version
 
+The latest version of this action uses the following dependencies versions:
+
+| Package      | Version |
+| ----------- | ----------- |
+| awscli      | 1.24.0  |
+| helm   | 3.10.1        |
+| kubectl   | 1.25.91        |
+
+It is very much possible that an update came out and I did not update the action on time. In this please, feel free to [send me a PR](#contributing) and I'll review it as soon as possible.
 
 # Accessing your cluster
 
@@ -90,7 +100,7 @@ This action does not require any kube-config data set as a secret to connect to 
 However if you find this configuration option complicated, you can still supply `KUBE_CONFIG_DATA` as a repository secret, however this is not endorsed by this repository.
 
 
-# Contributions
+# Contributing
 
 Pull requests, issues or feedback of any kind are more than welcome by anyone!
 
