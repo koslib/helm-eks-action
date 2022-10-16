@@ -95,7 +95,14 @@ It is very much possible that an update came out and I did not update the action
 
 # Accessing your cluster
 
-This action does not require any kube-config data set as a secret to connect to the repo. Instead, by authenticating with your AWS account, it automatically generates a kube-config file for your cluster which is then used to execute any `helm` commands. 
+It is required to set the `KUBE_CONFIG_DATA` env/secret in order to access your cluster. I recommend you do it dynamically using a step like that:
+
+```
+- name: kubeconfing
+        run: |
+          aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+          echo "KUBE_CONFIG_DATA=$(cat ~/.kube/config | base64)" >> $GITHUB_ENV
+```
 
 However if you find this configuration option complicated, you can still supply `KUBE_CONFIG_DATA` as a repository secret, however this is not endorsed by this repository.
 
