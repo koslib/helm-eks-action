@@ -1,14 +1,15 @@
 FROM mozilla/sops:v3.6.0-alpine as sops
-FROM amazon/aws-cli:2.8.4 as awscliv2
 FROM alpine:3.13
 
+ARG AWSCLI_VERSION="1.25.96"
 ARG HELM_VERSION="3.10.1"
 ARG KUBECTL_VERSION="1.25.91"
 
 COPY --from=sops /usr/local/bin/sops /usr/bin/sops
-COPY --from=awscliv2 /usr/local/bin/aws /usr/local/bin/aws
 
-RUN apk add curl wget ca-certificates bash alpine-sdk
+RUN apk add curl wget ca-certificates bash alpine-sdk py-pip gcc git
+
+RUN pip install awscli==${AWSCLI_VERSION}
 
 RUN curl -L -o /usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 RUN chmod +x /usr/bin/kubectl
