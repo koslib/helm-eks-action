@@ -21,5 +21,5 @@ echo "running entrypoint command(s)"
 
 response=$(sh -c " $INPUT_COMMAND")
 
-respnse=$(echo $response | tr '\n' ' ')
+response=$(echo $response | tr '\n' ' ')
 echo "result=$response" >> $GITHUB_OUTPUT
