@@ -11,7 +11,7 @@ inputs:
     description: "Comma-separated URLs for the Helm Plugins you need installed"
     required: false
 outputs:
-  result:
+  response:
     description: "Output returned by your Helm or kubectl command"
 runs:
   using: "docker"

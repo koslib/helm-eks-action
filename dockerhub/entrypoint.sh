@@ -19,7 +19,6 @@ fi
 
 echo "running entrypoint command(s)"
 
-response=$(sh -c " $INPUT_COMMAND")
-
-response=$(echo $response | tr '\n' ' ')
-echo "result=$response" >> $GITHUB_OUTPUT
+echo "response<<EOF" >> $GITHUB_OUTPUT
+echo "$(sh -c "$INPUT_COMMAND")" >> $GITHUB_OUTPUT
+echo "EOF" >> $GITHUB_OUTPUT
