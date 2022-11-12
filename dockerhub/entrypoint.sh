@@ -21,6 +21,8 @@ echo "running entrypoint command(s)"
 
 response=$(sh -c " $INPUT_COMMAND")
 
+echo "command response: $response"
+
 # write multi-line response to github output
 echo "response<<EOF" >> $GITHUB_OUTPUT
 echo "$response" >> $GITHUB_OUTPUT
