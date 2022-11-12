@@ -22,4 +22,4 @@ echo "running entrypoint command(s)"
 response=$(sh -c " $INPUT_COMMAND")
 
 respnse=$(echo $response | tr '\n' ' ')
-echo "response=$response" >> $GITHUB_OUTPUT
+echo "result=$response" >> $GITHUB_OUTPUT
