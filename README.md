@@ -89,7 +89,7 @@ The latest version of this action uses the following dependencies versions:
 | ----------- | ----------- |
 | awscli      | 1.24.0  |
 | helm   | 3.10.1        |
-| kubectl   | 1.25.91        |
+| kubectl   | 1.25.4        |
 
 It is very much possible that an update came out and I did not update the action on time. In this please, feel free to [send me a PR](#contributing) and I'll review it as soon as possible.
 
