@@ -21,6 +21,8 @@ echo "running entrypoint command(s)"
 
 response=$(bash -c " ${INPUT_COMMAND}")
 
-echo "response<<EOF" >> "${GITHUB_OUTPUT}"
-echo "$response" >> "${GITHUB_OUTPUT}"
-echo "EOF" >> "${GITHUB_OUTPUT}"
+{
+  echo "response<<EOF";
+  echo "$response";
+  echo "EOF";
+} >> "${GITHUB_OUTPUT}"
