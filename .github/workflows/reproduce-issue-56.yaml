@@ -1,0 +1,18 @@
+name: Reproduce issue 56
+
+on:
+  push:
+    branch:
+      - reproduce-issue-56
+
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          command: |
+            echo "line 1"
+            echo "line 2"
