@@ -19,7 +19,7 @@ fi
 
 echo "running entrypoint command(s)"
 
-response=$(bash -c " ${INPUT_COMMAND}")
+response=$(bash -c "${INPUT_COMMAND}")
 
 {
   echo "response<<EOF";
