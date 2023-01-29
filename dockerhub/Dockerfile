@@ -20,4 +20,4 @@ RUN wget https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -O - | tar
 RUN chmod +x /usr/local/bin/helm
 
 COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]:
+ENTRYPOINT ["/entrypoint.sh"]
