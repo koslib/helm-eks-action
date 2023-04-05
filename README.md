@@ -1,5 +1,5 @@
 # helm-eks-action
-Github Action for  executing Helm commands on EKS (using aws-iam-authenticator).
+Github Action for executing Helm commands on EKS (using aws-iam-authenticator).
 
 The Helm version installed is Helm3.
 
@@ -41,7 +41,7 @@ jobs:
       AWS_REGION: us-east-1
       CLUSTER_NAME: my-staging
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -50,10 +50,12 @@ jobs:
           role-session-name: ci-run-${{ github.run_id }}
           aws-region: ${{ env.AWS_REGION }}
       
-      - name: kubeconfing
+      - name: kubeconfig
         run: |
-          aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
-          echo "KUBE_CONFIG_DATA=$(cat ~/.kube/config | base64)" >> $GITHUB_ENV
+          aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}  --kubeconfig ./kubeconfig
+          echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
+          echo $(cat ./kubeconfig | base64) >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
 
       - name: helm deploy
         uses: koslib/helm-eks-action@master
@@ -98,13 +100,15 @@ It is very much possible that an update came out and I did not update the action
 It is required to set the `KUBE_CONFIG_DATA` env/secret in order to access your cluster. I recommend you do it dynamically using a step like that:
 
 ```
-- name: kubeconfing
+- name: kubeconfig
         run: |
-          aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
-          echo "KUBE_CONFIG_DATA=$(cat ~/.kube/config | base64)" >> $GITHUB_ENV
+          aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}  --kubeconfig ./kubeconfig
+          echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
+          echo $(cat ./kubeconfig | base64) >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
 ```
 
-However if you find this configuration option complicated, you can still supply `KUBE_CONFIG_DATA` as a repository secret, however this is not endorsed by this repository.
+If you find this configuration option complicated, you can still supply `KUBE_CONFIG_DATA` as a repository secret, however this is not endorsed by this repository.
 
 
 # Contributing
