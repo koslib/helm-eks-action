@@ -14,19 +14,6 @@ RUN apk add py-pip curl wget git bash jq gcc alpine-sdk openssl
 RUN apk add --no-cache aws-cli
 RUN apk --no-cache add ca-certificates && update-ca-certificates
 
-
-
-# install aws cli v2
-# RUN \
-#     zipfile=awscli-exe-linux-x86_64.zip \
-#     if [[ "${PLATFORM}" = "arm64" ]]; then zipfile=awscli-exe-linux-aarch64.zip fi \
-#     curl -L https://awscli.amazonaws.com/$zipfile.zip -o awscliv2.zip
-
-# RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
-# RUN unzip awscliv2.zip
-# RUN sudo ./aws/install
-RUN aws --version
-
 RUN curl -k -L -o /usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${PLATFORM}/kubectl 
 RUN chmod +x /usr/bin/kubectl
 
