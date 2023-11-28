@@ -1,22 +1,36 @@
-FROM mozilla/sops:v3.6.0-alpine as sops
+FROM mozilla/sops:v3-alpine as sops
 
 FROM alpine:3.13
 
-ARG AWSCLI_VERSION="1.24.0"
-ARG HELM_VERSION="3.10.1"
-ARG KUBECTL_VERSION="1.25.4"
+ARG HELM_VERSION="3.13.2"
+ARG KUBECTL_VERSION="1.28.4"
+ARG PLATFORM="arm64"
 
 COPY --from=sops /usr/local/bin/sops /usr/bin/sops
 
-RUN apk add py-pip curl wget ca-certificates git bash jq gcc alpine-sdk
-RUN pip install "awscli==${AWSCLI_VERSION}"
-RUN curl -L -o /usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+RUN apk update
+
+RUN apk add py-pip curl wget git bash jq gcc alpine-sdk openssl
+RUN apk add --no-cache aws-cli
+RUN apk --no-cache add ca-certificates && update-ca-certificates
+
+
+
+# install aws cli v2
+# RUN \
+#     zipfile=awscli-exe-linux-x86_64.zip \
+#     if [[ "${PLATFORM}" = "arm64" ]]; then zipfile=awscli-exe-linux-aarch64.zip fi \
+#     curl -L https://awscli.amazonaws.com/$zipfile.zip -o awscliv2.zip
+
+# RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+# RUN unzip awscliv2.zip
+# RUN sudo ./aws/install
+RUN aws --version
+
+RUN curl -k -L -o /usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${PLATFORM}/kubectl 
 RUN chmod +x /usr/bin/kubectl
 
-RUN curl -o /usr/bin/aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
-RUN chmod +x /usr/bin/aws-iam-authenticator
-
-RUN wget https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm
+RUN wget --no-check-certificate https://get.helm.sh/helm-v${HELM_VERSION}-linux-${PLATFORM}.tar.gz -O - | tar -xzO linux-${PLATFORM}/helm > /usr/local/bin/helm
 RUN chmod +x /usr/local/bin/helm
 
 COPY entrypoint.sh /entrypoint.sh

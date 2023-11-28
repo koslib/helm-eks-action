@@ -2,6 +2,8 @@
 
 set -e
 
+echo "creating docker image arch: $INPUT_ARCH"
+
 echo "${KUBE_CONFIG_DATA}" | base64 -d > kubeconfig
 export KUBECONFIG="${PWD}/kubeconfig"
 chmod 600 "${PWD}/kubeconfig"
