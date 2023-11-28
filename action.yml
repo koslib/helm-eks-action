@@ -10,9 +10,6 @@ inputs:
   plugins:
     description: "Comma-separated URLs for the Helm Plugins you need installed"
     required: false
-  arch: 
-    description: "Architecture for the Helm Plugin binaries: amd64. arm64 is also supported"
-    required: false
 outputs:
   result:
     description: "Output returned by your Helm or kubectl command"
@@ -20,5 +17,4 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.arch }}
     - ${{ inputs.command }}

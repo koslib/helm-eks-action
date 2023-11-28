@@ -4,7 +4,7 @@ FROM alpine:3.13
 
 ARG HELM_VERSION="3.13.2"
 ARG KUBECTL_VERSION="1.28.4"
-ARG PLATFORM="arm64"
+ARG PLATFORM="amd64" 
 
 COPY --from=sops /usr/local/bin/sops /usr/bin/sops
 
