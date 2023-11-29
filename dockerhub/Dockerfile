@@ -1,12 +1,17 @@
-FROM alpine:3.18.4
+FROM --platform=${BUILDPLATFORM} alpine:3.18.4
+
+# set build arguments automatically using buildx
+ARG BUILDPLATFORM
+ARG TARGETPLATFORM
+ARG BUILDARCH
 
 ARG HELM_VERSION="3.13.2"
 ARG KUBECTL_VERSION="1.28.4"
 
-RUN echo "I am running on $BUILDPLATFORM ($BUILDARCH), building for $TARGETPLATFORM" 
+RUN echo I am running on $BUILDPLATFORM $BUILDARCH, building for $TARGETPLATFORM
 
 # Download the binary
-RUN curl -k -L -O  https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.${BUILDARCH}
+RUN wget --no-check-certificate https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.${BUILDARCH}
 # Move the binary in to your PATH
 RUN mv sops-v3.8.1.linux.${BUILDARCH} /usr/local/bin/sops
 # Make the binary executable
