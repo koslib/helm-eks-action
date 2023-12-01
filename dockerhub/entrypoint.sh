@@ -17,7 +17,7 @@ then
     done
 fi
 
-echo "running command: [${INPUT_COMMAND}]"
+echo "running entrypoint command(s)"
 
 response=$(bash -c "${INPUT_COMMAND}")
 
