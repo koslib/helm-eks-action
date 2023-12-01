@@ -1,22 +1,36 @@
-FROM mozilla/sops:v3.6.0-alpine as sops
+FROM --platform=${BUILDPLATFORM} alpine:3.18.4
 
-FROM alpine:3.13
+# set build arguments automatically using buildx
+ARG BUILDPLATFORM
+ARG BUILDARCH
 
-ARG AWSCLI_VERSION="1.24.0"
-ARG HELM_VERSION="3.10.1"
-ARG KUBECTL_VERSION="1.25.4"
+ARG TARGETPLATFORM
+ARG TARGETARCH
 
-COPY --from=sops /usr/local/bin/sops /usr/bin/sops
+ARG HELM_VERSION="3.13.2"
+ARG KUBECTL_VERSION="1.28.4"
 
-RUN apk add py-pip curl wget ca-certificates git bash jq gcc alpine-sdk
-RUN pip install "awscli==${AWSCLI_VERSION}"
-RUN curl -L -o /usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+RUN echo I am running on $BUILDPLATFORM $BUILDARCH, to target arch for $TARGETPLATFORM $TARGETARCH
+
+# Download the binary
+RUN wget https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.${TARGETARCH}
+# Move the binary in to your PATH
+RUN mv sops-v3.8.1.linux.${TARGETARCH} /usr/local/bin/sops
+# Make the binary executable
+RUN chmod +x /usr/local/bin/sops
+
+
+RUN apk update
+
+RUN apk add py-pip curl wget git bash jq gcc alpine-sdk openssl
+RUN apk add --no-cache aws-cli
+RUN apk --no-cache add ca-certificates && update-ca-certificates
+
+RUN curl -L -o /usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl 
 RUN chmod +x /usr/bin/kubectl
 
-RUN curl -o /usr/bin/aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
-RUN chmod +x /usr/bin/aws-iam-authenticator
+RUN wget https://get.helm.sh/helm-v${HELM_VERSION}-linux-${TARGETARCH}.tar.gz -O - | tar -xzO linux-${TARGETARCH}/helm > /usr/local/bin/helm
 
-RUN wget https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm
 RUN chmod +x /usr/local/bin/helm
 
 COPY entrypoint.sh /entrypoint.sh
