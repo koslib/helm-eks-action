@@ -17,7 +17,10 @@ then
     done
 fi
 
-response=$(bash -c "$INPUT_COMMAND")
+echo "running command: [${INPUT_COMMAND}]"
+
+response=$(bash -c "${INPUT_COMMAND}")
+
 {
   echo "response<<EOF";
   echo "$response";
