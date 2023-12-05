@@ -17,12 +17,7 @@ then
     done
 fi
 
-echo "running entrypoint command(s)"
+echo "running entrypoint with command(s):${INPUT_COMMAND}"
 
 response=$(bash -c "${INPUT_COMMAND}")
-
-{
-  echo "response<<EOF";
-  echo "$response";
-  echo "EOF";
-} >> "${GITHUB_OUTPUT}"
+echo "$response" >> ${GITHUB_OUTPUT}
