@@ -32,5 +32,5 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:dockerhub"
-          platforms: linux/arm64
+          platforms: linux/amd64,linux/arm64
           tags: digonill/dgnll-helm-eks:latest, digonill/dgnll-helm-eks:${{ github.event.inputs.tag }}
