@@ -34,6 +34,6 @@ RUN chmod +x /usr/local/bin/helm
 
 FROM Base AS Exec
 
-COPY --from=Exec entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
