@@ -32,7 +32,7 @@ RUN chmod +x /usr/bin/kubectl
 RUN chmod +x /usr/local/bin/helm
 
 
-FROM Base AS Exec
+FROM base AS Exec
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
