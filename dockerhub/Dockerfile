@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} alpine:3.18.4 as prepared-binary
+FROM --platform=${BUILDPLATFORM} alpine:3.18.4 AS Stage1
 
 # set build arguments automatically using buildx
 ARG BUILDPLATFORM
@@ -26,11 +26,13 @@ RUN apk add --no-cache aws-cli
 RUN apk --no-cache add ca-certificates && update-ca-certificates
 
 RUN curl -L -o /usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl --insecure
-RUN chmod +x /usr/bin/kubectl
-
 RUN wget --no-check-certificate https://get.helm.sh/helm-v${HELM_VERSION}-linux-${TARGETARCH}.tar.gz -O - | tar -xzO linux-${TARGETARCH}/helm > /usr/local/bin/helm
+
+RUN chmod +x /usr/bin/kubectl
 RUN chmod +x /usr/local/bin/helm
 
-COPY --from=prepared-binary entrypoint.sh /entrypoint.sh
+WORKDIR /
+
+COPY --from=Stage1 entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
