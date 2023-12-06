@@ -25,8 +25,8 @@ RUN apk add py-pip curl wget git bash jq gcc alpine-sdk openssl
 RUN apk add --no-cache aws-cli
 RUN apk --no-cache add ca-certificates && update-ca-certificates
 
-RUN curl -L -o /usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl --insecure
-RUN wget --no-check-certificate https://get.helm.sh/helm-v${HELM_VERSION}-linux-${TARGETARCH}.tar.gz -O - | tar -xzO linux-${TARGETARCH}/helm > /usr/local/bin/helm
+RUN curl -L -o /usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl
+RUN wget https://get.helm.sh/helm-v${HELM_VERSION}-linux-${TARGETARCH}.tar.gz -O - | tar -xzO linux-${TARGETARCH}/helm > /usr/local/bin/helm
 
 RUN chmod +x /usr/bin/kubectl
 RUN chmod +x /usr/local/bin/helm
