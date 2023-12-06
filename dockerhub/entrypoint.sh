@@ -17,9 +17,12 @@ then
     done
 fi
 
-echo "running entrypoint with command(s):${INPUT_COMMAND}"
+echo "running entrypoint with command(s):"
 
 response=$(sh -c "${INPUT_COMMAND}")
 
-
-echo "response=$response" >> "$GITHUB_OUTPUT"
+{
+  echo "response<<EOF"
+  echo "$response"
+  echo "EOF"
+} >> "$GITHUB_OUTPUT"
