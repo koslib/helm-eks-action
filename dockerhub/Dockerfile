@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} alpine:3.18.4 AS Stage1
+FROM --platform=${BUILDPLATFORM} alpine:3.18.4 AS Base
 
 # set build arguments automatically using buildx
 ARG BUILDPLATFORM
@@ -31,8 +31,9 @@ RUN wget --no-check-certificate https://get.helm.sh/helm-v${HELM_VERSION}-linux-
 RUN chmod +x /usr/bin/kubectl
 RUN chmod +x /usr/local/bin/helm
 
-WORKDIR /
 
-COPY --from=Stage1 entrypoint.sh /entrypoint.sh
+FROM Base AS Exec
+
+COPY --from=Exec entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
