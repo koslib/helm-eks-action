@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -17,12 +17,12 @@ then
     done
 fi
 
-echo "running entrypoint command(s)"
+echo "running entrypoint with command(s):"
 
-response=$(bash -c "${INPUT_COMMAND}")
+response=$(sh -c "$INPUT_COMMAND")
 
 {
-  echo "response<<EOF";
-  echo "$response";
-  echo "EOF";
-} >> "${GITHUB_OUTPUT}"
+  echo "response<<EOF"
+  echo "$response"
+  echo "EOF"
+} >> "$GITHUB_OUTPUT"

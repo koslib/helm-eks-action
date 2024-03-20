@@ -25,5 +25,5 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:dockerhub"
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           tags: koslib/ga-helm-eks:latest, koslib/ga-helm-eks:${{ github.event.inputs.tag }}
